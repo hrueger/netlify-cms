@@ -83,9 +83,11 @@ class Workflow extends Component {
       publishUnpublishedEntry,
       deleteUnpublishedEntry,
       collections,
+      config,
+      user,
       t,
     } = this.props;
-
+    
     if (!isEditorialWorkflow) return null;
     if (isFetching) return <Loader active>{t('workflow.workflow.loading')}</Loader>;
     const reviewCount = unpublishedEntries.get('pending_review').size;
@@ -130,6 +132,8 @@ class Workflow extends Component {
           handleDelete={deleteUnpublishedEntry}
           isOpenAuthoring={isOpenAuthoring}
           collections={collections}
+          user={user}
+          config={config}
         />
       </WorkflowContainer>
     );
@@ -140,7 +144,7 @@ function mapStateToProps(state) {
   const { collections, config, globalUI } = state;
   const isEditorialWorkflow = config.publish_mode === EDITORIAL_WORKFLOW;
   const isOpenAuthoring = globalUI.useOpenAuthoring;
-  const returnObj = { collections, isEditorialWorkflow, isOpenAuthoring };
+  const returnObj = { collections, isEditorialWorkflow, isOpenAuthoring, config };
 
   if (isEditorialWorkflow) {
     returnObj.isFetching = state.editorialWorkflow.getIn(['pages', 'isFetching'], false);

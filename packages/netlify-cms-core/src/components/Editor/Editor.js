@@ -356,8 +356,8 @@ export class Editor extends React.Component {
       slug,
       t,
       editorBackLink,
+      config,
     } = this.props;
-
     const isPublished = !newEntry && !unpublishedEntry;
 
     if (entry && entry.get('error')) {
@@ -393,6 +393,7 @@ export class Editor extends React.Component {
         onDuplicate={this.handleDuplicateEntry}
         showDelete={this.props.showDelete}
         user={user}
+        config={config}
         hasChanged={hasChanged}
         displayUrl={displayUrl}
         hasWorkflow={hasWorkflow}

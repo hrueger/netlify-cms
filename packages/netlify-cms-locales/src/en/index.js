@@ -299,6 +299,10 @@ const en = {
       deleteNewEntry: 'Delete new entry',
       publishChanges: 'Publish changes',
       publishNewEntry: 'Publish new entry',
+      moveToInReviewChanges: 'Move changes to "In Review"',
+      moveToInReviewNewEntry: 'Move new entry to "In Review"',
+      moveToReadyChanges: 'Move changes to "Ready"',
+      moveToReadyNewEntry: 'Move new entry to "Ready"',
     },
     workflowList: {
       onDeleteEntry: 'Are you sure you want to delete this entry?',

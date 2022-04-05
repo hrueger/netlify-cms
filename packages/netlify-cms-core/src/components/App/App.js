@@ -154,7 +154,6 @@ class App extends React.Component {
       t,
       showMediaButton,
     } = this.props;
-
     if (config === null) {
       return null;
     }
@@ -205,7 +204,7 @@ class App extends React.Component {
               from="/error=access_denied&error_description=Signups+not+allowed+for+this+instance"
               to={defaultPath}
             />
-            {hasWorkflow ? <Route path="/workflow" component={Workflow} /> : null}
+            {hasWorkflow ? <Route path="/workflow" render={props => <Workflow user config />} /> : null}
             <RouteInCollection
               exact
               collections={collections}
@@ -215,12 +214,12 @@ class App extends React.Component {
             <RouteInCollection
               path="/collections/:name/new"
               collections={collections}
-              render={props => <Editor {...props} newRecord />}
+              render={props => <Editor {...props} config={config} newRecord />}
             />
             <RouteInCollection
               path="/collections/:name/entries/*"
               collections={collections}
-              render={props => <Editor {...props} />}
+              render={props => <Editor {...props} config={config} />}
             />
             <RouteInCollection
               path="/collections/:name/search/:searchTerm"

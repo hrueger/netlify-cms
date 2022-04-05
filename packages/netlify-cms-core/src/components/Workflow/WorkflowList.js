@@ -140,6 +140,7 @@ class WorkflowList extends React.Component {
   };
 
   handleChangeStatus = (newStatus, dragProps) => {
+    console.log(newStatus, dragProps);
     const slug = dragProps.slug;
     const collection = dragProps.collection;
     const oldStatus = dragProps.ownStatus;
@@ -219,7 +220,8 @@ class WorkflowList extends React.Component {
           const isModification = entry.get('isModification');
 
           const allowPublish = collection?.get('publish');
-          const canPublish = ownStatus === status.last() && !entry.get('isPersisting', false);
+          const canPublish = (this.props.config?.require_roles?.publish ? this.props.config?.require_roles?.publish === this.props.user.role : true) && ownStatus === status.last() && !entry.get('isPersisting', false);
+          
           const postAuthor = entry.get('author');
 
           return (
@@ -241,10 +243,13 @@ class WorkflowList extends React.Component {
                       isModification={isModification}
                       editLink={editLink}
                       timestamp={timestamp}
+                      status={ownStatus}
                       onDelete={this.requestDelete.bind(this, collectionName, slug, ownStatus)}
                       allowPublish={allowPublish}
                       canPublish={canPublish}
                       onPublish={this.requestPublish.bind(this, collectionName, slug, ownStatus)}
+                      onMoveToInReview={this.handleChangeStatus.bind(this, "pending_review", {slug, ownStatus, collection: collectionName})}
+                      onMoveToReady={this.handleChangeStatus.bind(this, "pending_publish", {slug, ownStatus, collection: collectionName})}
                       postAuthor={postAuthor}
                     />
                   </div>,

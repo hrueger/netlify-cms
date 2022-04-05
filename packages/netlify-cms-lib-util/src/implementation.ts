@@ -84,7 +84,7 @@ export type PersistOptions = {
 
 export type DeleteOptions = {};
 
-export type Credentials = { token: string | {}; refresh_token?: string };
+export type Credentials = { token: string | {}; refresh_token?: string, app_metadata?: {provider: "saml"}, role?: string };
 
 export type User = Credentials & {
   backendName?: string;

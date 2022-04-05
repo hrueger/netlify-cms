@@ -90,7 +90,11 @@ export default class GitGatewayAuthenticationPage extends React.Component {
   };
 
   handleIdentityLogout = () => {
-    window.netlifyIdentity.open();
+    if (!this.props.config.backend?.saml_only) {
+      window.netlifyIdentity.open();
+    } else {
+      window.location.reload();
+    }
   };
 
   handleIdentityError = err => {
@@ -106,6 +110,8 @@ export default class GitGatewayAuthenticationPage extends React.Component {
     const user = window.netlifyIdentity.currentUser();
     if (user) {
       this.props.onLogin(user);
+    } else if (this.props.config.backend?.saml_only) {
+      window.location = "https://docs-cms.glue.makepro-x.com/.netlify/identity/authorize?provider=saml";
     } else {
       window.netlifyIdentity.open();
     }
@@ -184,7 +190,7 @@ export default class GitGatewayAuthenticationPage extends React.Component {
             logoUrl={config.logo_url}
             siteUrl={config.site_url}
             onLogin={this.handleIdentity}
-            renderButtonContent={() => t('auth.loginWithNetlifyIdentity')}
+            renderButtonContent={() => t('auth.login')}
             t={t}
           />
         );

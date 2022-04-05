@@ -86,6 +86,27 @@ const PublishButton = styled.button`
   }
 `;
 
+const MoveToInReviewButton = styled.button`
+  ${styles.button};
+  background-color: ${colorsRaw.yellow};
+  color: ${colors.textDark};
+  margin-left: 6px;
+
+  &[disabled] {
+    ${buttons.disabled};
+  }
+`;
+const MoveToReadyButton = styled.button`
+  ${styles.button};
+  background-color: ${colorsRaw.greenLight};
+  color: ${colors.textDark};
+  margin-left: 6px;
+
+  &[disabled] {
+    ${buttons.disabled};
+  }
+`;
+
 const WorkflowCardContainer = styled.div`
   ${components.card};
   margin-bottom: 24px;
@@ -125,11 +146,14 @@ function WorkflowCard({
   editLink,
   timestamp,
   onDelete,
+  onMoveToInReview,
+  onMoveToReady,
   allowPublish,
   canPublish,
   onPublish,
   postAuthor,
   t,
+  status,
 }) {
   return (
     <WorkflowCardContainer>
@@ -146,13 +170,25 @@ function WorkflowCard({
             ? t('workflow.workflowCard.deleteChanges')
             : t('workflow.workflowCard.deleteNewEntry')}
         </DeleteButton>
-        {allowPublish && (
+        { status === "draft" ?
+          <MoveToInReviewButton onClick={onMoveToInReview}>
+            {isModification
+              ? t('workflow.workflowCard.moveToInReviewChanges')
+              : t('workflow.workflowCard.moveToInReviewNewEntry')}
+            </MoveToInReviewButton> :
+            status === "pending_review" ? 
+            <MoveToReadyButton onClick={onMoveToReady}>
+            {isModification
+              ? t('workflow.workflowCard.moveToReadyChanges')
+              : t('workflow.workflowCard.moveToReadyNewEntry')}
+            </MoveToReadyButton>
+             :
           <PublishButton disabled={!canPublish} onClick={onPublish}>
             {isModification
               ? t('workflow.workflowCard.publishChanges')
               : t('workflow.workflowCard.publishNewEntry')}
           </PublishButton>
-        )}
+        }
       </CardButtonContainer>
     </WorkflowCardContainer>
   );

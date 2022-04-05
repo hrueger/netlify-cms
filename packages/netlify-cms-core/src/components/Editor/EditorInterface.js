@@ -232,6 +232,7 @@ class EditorInterface extends Component {
       draftKey,
       editorBackLink,
       t,
+      config,
     } = this.props;
 
     const { scrollSyncEnabled, showEventBlocker } = this.state;
@@ -337,9 +338,10 @@ class EditorInterface extends Component {
           onPublish={onPublish}
           unPublish={unPublish}
           onDuplicate={onDuplicate}
+          config={config}
+          user={user}
           onPublishAndNew={() => this.handleOnPublish({ createNew: true })}
           onPublishAndDuplicate={() => this.handleOnPublish({ createNew: true, duplicate: true })}
-          user={user}
           hasChanged={hasChanged}
           displayUrl={displayUrl}
           collection={collection}
