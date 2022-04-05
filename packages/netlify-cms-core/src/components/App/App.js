@@ -204,7 +204,7 @@ class App extends React.Component {
               from="/error=access_denied&error_description=Signups+not+allowed+for+this+instance"
               to={defaultPath}
             />
-            {hasWorkflow ? <Route path="/workflow" render={props => <Workflow user config />} /> : null}
+            {hasWorkflow ? <Route path="/workflow" render={props => <Workflow user={user} config={config} />} /> : null}
             <RouteInCollection
               exact
               collections={collections}

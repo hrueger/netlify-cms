@@ -319,8 +319,9 @@ export default class GitGateway implements Implementation {
         }
       }
 
+      let userRoles: string[] = [];
       if (this.acceptRoles && this.acceptRoles.length > 0) {
-        const userRoles = get(jwtDecode(token), 'app_metadata.roles', []);
+        userRoles = get(jwtDecode(token), 'app_metadata.roles', []);
         const validRole = intersection(userRoles, this.acceptRoles).length > 0;
         if (!validRole) {
           throw new Error("You don't have sufficient permissions to access Netlify CMS");
@@ -362,7 +363,7 @@ export default class GitGateway implements Implementation {
       if (!(await this.api!.hasWriteAccess())) {
         throw new Error("You don't have sufficient permissions to access Netlify CMS");
       }
-      return { name: userData.name, login: userData.email } as User;
+      return { name: userData.name, login: userData.email, role: userRoles[0] || "" } as User;
     });
   }
   async restoreUser() {

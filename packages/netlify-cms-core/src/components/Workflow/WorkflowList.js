@@ -221,7 +221,6 @@ class WorkflowList extends React.Component {
 
           const allowPublish = collection?.get('publish');
           const canPublish = (this.props.config?.require_roles?.publish ? this.props.config?.require_roles?.publish === this.props.user.role : true) && ownStatus === status.last() && !entry.get('isPersisting', false);
-          
           const postAuthor = entry.get('author');
 
           return (
